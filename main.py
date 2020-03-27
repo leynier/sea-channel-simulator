@@ -38,3 +38,17 @@ def arrival_ships_parameters(time, size):
 def arrival_ships_distribution(time, size):
     mu, sigma2 = arrival_ships_parameters(time, size)
     return abs(normal_distribution(mu, sigma2 ** 0.5))
+
+
+def arrival_ships_list():
+    result = []
+    d = arrival_ships_distribution
+    ships = [Ship(d(0, 1), 1), Ship(d(0, 2), 2), Ship(d(0, 4), 4)]
+    while True:
+        ship = min(ships)
+        if ship.time > 720:
+            break
+        ships.remove(ship)
+        ships.append((ship.time + d(ship.time, ship.size), ship.size))
+        result.append(ship)
+    return result
