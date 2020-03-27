@@ -40,15 +40,32 @@ def arrival_ships_distribution(time, size):
     return abs(normal_distribution(mu, sigma2 ** 0.5))
 
 
-def arrival_ships_list():
-    result = []
+def arrival_ships(dike_rows = 2, size_rows = 6):
+    time = 0
+    ships_list = list()
     d = arrival_ships_distribution
     ships = [Ship(d(0, 1), 1), Ship(d(0, 2), 2), Ship(d(0, 4), 4)]
     while True:
         ship = min(ships)
         if ship.time > 720:
             break
+        ships_list.append(ship)
         ships.remove(ship)
         ships.append((ship.time + d(ship.time, ship.size), ship.size))
-        result.append(ship)
-    return result
+    ships = ships_list
+    while ships:
+        next_ships = list()
+        skips_ships = list()
+        dike = [0 for _ in range(dike_rows)]
+        for ship in ships:
+            skip = True
+            for index, row in enumerate(dike):
+                if ship.size + row <= size_rows:
+                    dike[index] += ship.size
+                    next_ships.append(ship)
+                    skip = False
+            if skip:
+                skips_ships.append(ship)
+        time = max(time, max(next_ships)[0])
+        yield time, next_ships
+        ships = skips_ships
