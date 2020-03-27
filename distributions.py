@@ -1,5 +1,5 @@
+from math import log, e
 from random import random
-from scipy import array, log, e
 
 
 def exponential_distribution(alpha):
