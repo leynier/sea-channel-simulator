@@ -34,4 +34,4 @@ def arrival_ships_parameters(time, size):
 
 def arrival_ships_distribution(time, size):
     mu, sigma2 = arrival_ships_parameters(time, size)
-    return normal_distribution(mu, sigma2 ** 0.5)
+    return abs(normal_distribution(mu, sigma2 ** 0.5))
