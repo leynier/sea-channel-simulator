@@ -1,4 +1,7 @@
 from distributions import normal_distribution
+from functools import namedtuple
+
+Ship = namedtuple('Ship', ['time', 'size'])
 
 parameters_table = [
     [(5, 2), (3, 1), (10, 2)],
