@@ -4,6 +4,7 @@ from distributions import normal_distribution
 INF = 2 ** 64
 
 Ship = namedtuple('Ship', ['time', 'size'])
+Ships = namedtuple('Ships', ['time', 'ships'])
 
 parameters_table = [
     [(5, 2), (3, 1), (10, 2)],
@@ -48,12 +49,12 @@ def arrival_ships(dike_rows=2, size_rows=6):
     d = arrival_ships_distribution
     ships = [Ship(d(0, 1), 1), Ship(d(0, 2), 2), Ship(d(0, 4), 4)]
     while True:
-        ship = min(ships)
+        ship = Ship(*min(ships))
         if ship.time > 720:
             break
         ships_list.append(ship)
         ships.remove(ship)
-        ships.append((ship.time + d(ship.time, ship.size), ship.size))
+        ships.append(Ship(ship.time + d(*ship), ship.size))
     ships = ships_list
     while ships:
         next_ships = list()
@@ -66,8 +67,9 @@ def arrival_ships(dike_rows=2, size_rows=6):
                     dike[index] += ship.size
                     next_ships.append(ship)
                     skip = False
+                    break
             if skip:
                 skips_ships.append(ship)
-        time = max(time, max(next_ships)[0])
-        yield time, next_ships
+        time = max(time, Ship(*max(next_ships)).time)
+        yield Ships(time, next_ships)
         ships = skips_ships
