@@ -1,5 +1,5 @@
 from functools import namedtuple
-from distributions import normal_distribution
+from distributions import exponential_distribution, normal_distribution
 
 INF = 2 ** 64
 
@@ -73,3 +73,8 @@ def arrival_ships(dike_rows=2, size_rows=6):
         time = max(time, Ship(*max(next_ships)).time)
         yield Ships(time, next_ships)
         ships = skips_ships
+
+
+def dike_cycle(ships):
+    d = exponential_distribution
+    return d(4) + sum(d(2) for _ in ships) + d(7) + d(len(ships) * 3/2)
