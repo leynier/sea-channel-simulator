@@ -17,7 +17,7 @@ class Simulation:
 
     def __process(self):
         generator_ships = iter(ArrivalShips(self.dike_rows, self.size_rows))
-        finished = False
+        closed = False
         time = 0
         number_of_arrivals = 0
         number_of_departures = 0
@@ -28,10 +28,10 @@ class Simulation:
         try:
             arrival = next(generator_ships)
         except StopIteration:
-            finished = True
+            closed = True
         while True:
             min_time = min(times)
-            if not finished and arrival.time <= min_time:
+            if not closed and arrival.time <= min_time:
                 time = arrival.time
                 number_of_arrivals += 1
                 dikes[0].append(arrival.ships)
@@ -39,7 +39,7 @@ class Simulation:
                 try:
                     arrival = next(generator_ships)
                 except StopIteration:
-                    finished = True
+                    closed = True
                 if len(dikes[0]) == 1:
                     departure_ships = dikes[0][0]
                     times[0] = time + self.__cycle(departure_ships)
