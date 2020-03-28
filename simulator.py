@@ -77,7 +77,7 @@ def arrival_ships(dike_rows=2, size_rows=6):
 
 def dike_cycle(ships):
     d = exponential_distribution
-    return d(4) + sum(d(2) for _ in ships) + d(7) + d(len(ships) * 3/2)
+    return d(4) + sum(d(2) for _ in ships) + d(7) + d(1.5 * len(ships))
 
 
 def simulation(number_of_dikes=5):
