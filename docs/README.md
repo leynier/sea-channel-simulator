@@ -8,7 +8,7 @@
 
 ## Problema
 
-Un canal marı́timo consiste en una o más exclusas colocadas en diques consecutivos de manera que la combinación de estas permite el ascenso o descenso de los barcos, permitiendo el acceso del barco al dique siguiente. Estos canales son usados para la navegación a través de aguas turbulentas o para atravesar terrenos terrestres. Se desea conocer el tiempo de espera de los barcos para el uso de un canal con 5 diques para su funcionamiento. La operación de un canal puede ser dividido en dos ciclos muy similares que llamaremos ciclo de subida y ciclo de bajada. El ciclo de subida comienza con la compuerta del nivel superior cerrada y la compuerta del nivel inferior abierta. Los barcos esperando en el nivel inferior entran en el dique. Cuando los barcos se acomodan dentro del dique las puertas del nivel inferior se cierran y las puertas del nivel superior se abren y el agua del nivel superior inunda el dique, haciendo la función de un elevador marı́timo. Luego los barcos pasan al nivel superior, dejando el dique vacı́o. El ciclo de bajada consiste en el funcionamiento opuesto del ciclo descrito.
+Un canal marı́timo consiste en una o más esclusas colocadas en diques consecutivos de manera que la combinación de estas permite el ascenso o descenso de los barcos, permitiendo el acceso del barco al dique siguiente. Estos canales son usados para la navegación a través de aguas turbulentas o para atravesar terrenos terrestres. Se desea conocer el tiempo de espera de los barcos para el uso de un canal con 5 diques para su funcionamiento. La operación de un canal puede ser dividido en dos ciclos muy similares que llamaremos ciclo de subida y ciclo de bajada. El ciclo de subida comienza con la compuerta del nivel superior cerrada y la compuerta del nivel inferior abierta. Los barcos esperando en el nivel inferior entran en el dique. Cuando los barcos se acomodan dentro del dique las puertas del nivel inferior se cierran y las puertas del nivel superior se abren y el agua del nivel superior inunda el dique, haciendo la función de un elevador marı́timo. Luego los barcos pasan al nivel superior, dejando el dique vacı́o. El ciclo de bajada consiste en el funcionamiento opuesto del ciclo descrito.
 
 Ambos ciclos tienen las mismas 3 fases para su cumplimento, que se pueden llamar como fase de entrada, fase de transporte y fase de salida respectivamente. La fase de entrada consiste en abrir las puertas del nivel inferior y dejar entrar a los barcos esperando hasta que estos se acomodan dentro del dique, la duración de este proceso depende del tiempo de apertura de las compuertas que distribuye de manera exponencial con λ = 4 minutos y el tiempo que se demora cada barco en entrar al dique, que distribuye de manera exponencial con λ = 2 minutos independientemente del tamaño de cada barco. Los barcos a entrar en el dique son tomados de manera secuencial de la cola de arribo de los barcos y en caso de que algún barco no quepa en el dique, el siguiente en la cola toma su lugar, en caso de que ningún barco quepa en el dique, la fase comienza sin llenar la capacidad del dique.
 
@@ -24,7 +24,7 @@ El tiempo de arribo de los barcos distribuye de acuerdo con la función Normal y
 
 ## Principales ideas
 
-Se utilizó un modelo de simulación en eventos discretos de `N` servidores en serie. Cada grupo de barcos que pueden acomodarse en un dique según su tamaño y el orden en que arribaron al canal se considera como un cliente. La modelación sigue la siguiente idea, se generan los barcos con su tamaño y tiempo de arribo al canal mientras este sea menor que el horario de cierre. Cuando un grupo de barcos está listo para ingresar a un dique, lo hacen y en ese momento se generá el evento de traslado hacia el siguiente dique, y así sucesivamente hasta que no hayan más barcos entrando y todos hayan salido del canal.
+Se utilizó un modelo de simulación en eventos discretos de `N` servidores en serie. Cada grupo de barcos que pueden acomodarse en un dique según su tamaño y el orden en que arribaron al canal se considera como un cliente. La modelación sigue la siguiente idea, se generan los barcos con su tamaño y tiempo de arribo al canal mientras este sea menor que el horario de cierre. Cuando un grupo de barcos está listo para ingresar a un dique, lo hacen y en ese momento se genera el evento de traslado hacia el siguiente dique, y así sucesivamente hasta que no haya más barcos entrando y todos hayan salido del canal.
 
 ## Modelación
 
@@ -33,7 +33,7 @@ Se utilizó un modelo de simulación en eventos discretos de `N` servidores en s
 ```python
 t # Tiempo actual de la simulación.
 c  # Indica si el canal cerró.
-Na # Número de arribos al canal (un arribo esta
+Na # Número de arribos al canal (un arribó esta
    # compuesto por un grupo de barcos que entran
    # en el primer dique).
 Nd # Número de salidas del canal (una salida esta
@@ -43,7 +43,7 @@ n # Colas para cada dique.
 Ta # Lista de los grupos de barcos con su tiempo
    # de arribo al primer dique.
 Td # Lista de los grupos de barcos con su tiempo
-   # de salida del ultimo dique.
+   # de salida del último dique.
 ta # Grupo de barcos con su tiempo de arribo al
    # primer dique.
 ti # Lista de los grupos de barcos con su tiempo
@@ -81,7 +81,7 @@ if not c and ta.time <= min(ti):
     try ta <- G() else c <- True
 ```
 
-Evento de traslado de un dique hacia el siguiente. Si la cola del dique desde donde se realiza el traslado no se queda vacia entonces se general el siquiente evento de traslado de ese dique.
+Evento de traslado de un dique hacia el siguiente. Si la cola del dique desde donde se realiza el traslado no se queda vacía entonces se genera el siguiente evento de traslado de ese dique.
 
 ```python
 if ti[i] = min(ti) and len(n[i]) > 0 for i in range(4):
