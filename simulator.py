@@ -1,5 +1,7 @@
-from distributions import normal_distribution
 from functools import namedtuple
+from distributions import normal_distribution
+
+INF = 2 ** 64
 
 Ship = namedtuple('Ship', ['time', 'size'])
 
@@ -40,7 +42,7 @@ def arrival_ships_distribution(time, size):
     return abs(normal_distribution(mu, sigma2 ** 0.5))
 
 
-def arrival_ships(dike_rows = 2, size_rows = 6):
+def arrival_ships(dike_rows=2, size_rows=6):
     time = 0
     ships_list = list()
     d = arrival_ships_distribution
